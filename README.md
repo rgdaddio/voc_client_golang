@@ -13,4 +13,4 @@ cd to voc_client_golang and type:<br>
 make<br>
 
 To run:<br>
-voc_client_go_app <server> <schema name> <tenant_id> <public key> <br>
+voc_client_go_app \<server\> \<schema name\> \<tenant_id\> \<public key\><br>
