@@ -48,8 +48,11 @@ func main() {
     var ja_buffer bytes.Buffer
     jsnn := build_json(os.Args[2], os.Args[3], os.Args[4])
     ja_buffer.WriteString(jsnn)
+
     send_req("https://" + os.Args[1] + "/Anaina/v0/Register",  ja_buffer)
 
     send_req("https://" + os.Args[1] + "/Anaina/v0/HelloVoC",  ja_buffer)
+
+
 
 }
