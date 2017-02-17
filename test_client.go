@@ -7,6 +7,9 @@ import (
     "os"
     "crypto/tls"
     "bytes"
+    "database/sql"
+    _"github.com/mattn/go-sqlite3"
+//    "go-sqlite3"
 //    "encoding/json"
 )
 
@@ -46,4 +49,9 @@ func main() {
         }
         fmt.Printf("%s\n", string(contents))
     }
+    db, err := sql.Open("sqlite3", "./foo.db")
+    //stmt, err = db.Prepare("delete from userinfo where uid=?")
+    fmt.Printf("%s", err)
+    fmt.Printf("%s", db)
+    //fmt.Printf("%s", stmt)
 }
