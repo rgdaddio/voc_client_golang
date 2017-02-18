@@ -57,7 +57,9 @@ func main() {
 
     send_req("https://" + os.Args[1] + "/Anaina/v0/HelloVoC",  ja_buffer)
 
-
+    db, err := sql.Open("sqlite3", "./foo.db")
+    fmt.Printf("%s", err)
+    fmt.Printf("%s", db)
 
 
 }
