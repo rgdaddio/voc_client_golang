@@ -10,9 +10,13 @@ default: all
 all: voc_client_go_app
 
 voc_client_go_app: test_client.go
-	rm -f go1.5.linux-amd64.tar*
-	wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz
-	tar -xvzf go1.5.linux-amd64.tar.gz
+	if test ! -s go1.5.linux-amd64.tar.gz ;\
+	then \
+		rm -f go1.5.linux-amd64.tar* ; \
+		wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz ; \
+		tar -xvzf go1.5.linux-amd64.tar.gz ; \
+	fi;
+
 	$(BUILDER) get golang.org/x/net/context
 	$(BUILDER) get -u github.com/mattn/go-sqlite3
 	rm -fr /tmp/go-build*
