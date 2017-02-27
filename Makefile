@@ -20,7 +20,7 @@ voc_client_go_app: test_client.go
 	$(BUILDER)  build -work -x -compiler gccgo -gccgoflags -pthread github.com/mattn/go-sqlite3/.
 	cp -fr /tmp/go-*/github.com/ $(shell pwd)/output/
 	cp -fr /tmp/go-*/golang.org/ $(shell pwd)/output/
-	$(CC) -v -g -o voc_client_go_app test_client.go client_utilities.go -I $(shell pwd)/output $(shell pwd)/output/github.com/mattn/libgo-sqlite3.a $(shell pwd)/output/golang.org/x/net/libcontext.a -pthread -ldl  
+	$(CC) -v -g -o voc_client_go_app test_client.go client_utilities.go client_database.go -I $(shell pwd)/output $(shell pwd)/output/github.com/mattn/libgo-sqlite3.a $(shell pwd)/output/golang.org/x/net/libcontext.a -pthread -ldl  
 
 clean veryclean:
 	$(RM) voc_client_go_app
