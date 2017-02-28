@@ -4,6 +4,8 @@ import (
     "fmt"
     "os"
     "bytes"
+    "bufio"
+    "strings"
     "database/sql"
     _"github.com/mattn/go-sqlite3"
 )
@@ -32,5 +34,12 @@ func main() {
     create_tables(db);
     //fmt.Printf("%s", db)
 
-
+    reader := bufio.NewReader(os.Stdin)
+    for{
+	text, _ := reader.ReadString('\n')
+	text = strings.Replace(text, "\n", "", -1)
+	if (text == "test") {
+	   fmt.Printf("%s\n", text)
+	   }
+      }  	   	
 }
