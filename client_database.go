@@ -1,6 +1,8 @@
 package main
 
 import (
+    "fmt"
+    "os"
     "database/sql"
     _"github.com/mattn/go-sqlite3"
 )
@@ -54,7 +56,7 @@ func create_tables(db *sql.DB){
   if err != nil { panic(err) }
 
   //CONSUMPTION STATUS
-  stmt, _ = db.Prepare("create table if not exists consumption_status (watch_time int,watchstart integer,watchend int,my_row intege primary key autoincrement)")
+  stmt, _ = db.Prepare("create table if not exists consumption_status (watch_time int,watchstart integer,watchend int,my_row integer primary key autoincrement)")
   stmt.Exec()
   _, err = stmt.Exec()
   if err != nil { panic(err) }
@@ -83,5 +85,5 @@ func create_tables(db *sql.DB){
   stmt.Exec()
   _, err = stmt.Exec()
   if err != nil { panic(err) }
-
+  fmt.Fprintf(os.Stdout, "Database Table Creation Complete\n")
 }
