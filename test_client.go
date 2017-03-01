@@ -6,7 +6,7 @@ import (
     "bytes"
     "bufio"
     "strings"
-    "database/sql"
+//    "database/sql"
     _"github.com/mattn/go-sqlite3"
 )
 
@@ -25,14 +25,8 @@ func main() {
     jsnn := build_json(os.Args[2], os.Args[3], os.Args[4])
     ja_buffer.WriteString(jsnn)
 
-
-    send_req("https://" + os.Args[1] + "/Anaina/v0/Register",  ja_buffer)
-
-    send_req("https://" + os.Args[1] + "/Anaina/v0/HelloVoC",  ja_buffer)
-
-    db, _ := sql.Open("sqlite3", "./foo.db")
-    create_tables(db);
-    //fmt.Printf("%s", db)
+      reg_request("https://" + os.Args[1] + "/Anaina/v0/Register", ja_buffer)
+      //fmt.Printf("%s", db)
 
     reader := bufio.NewReader(os.Stdin)
     for{
@@ -40,6 +34,10 @@ func main() {
 	text = strings.Replace(text, "\n", "", -1)
 	if (text == "test") {
 	   fmt.Printf("%s\n", text)
-	   }
-      }  	   	
+	   }else if (text == "hello") {
+	   	 send_req("https://" + os.Args[1] + "/Anaina/v0/HelloVoC",  ja_buffer)
+	   }else{
+		fmt.Printf("Unknown command %s\n", text)
+	}
+      }	 	   	
 }
