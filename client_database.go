@@ -7,6 +7,17 @@ import (
     _"github.com/mattn/go-sqlite3"
 )
 
+func insert_voc_user(db *sql.DB, reg RegistrationResponse){
+  stmt, err := db.Prepare("INSERT INTO voc_user( " +
+                          "voc_id, access_token, refresh_token, " +
+                          " daily_download_wifi, daily_download_cellular, play_ads, skip_policy_first_time)" +
+                          "values(?,?,?,?,?,?,?)")
+  _, err = stmt.Exec(reg.VocId, reg.AccessToken, reg.RefreshToken, reg.DailyDownloadWifi,
+                        reg.DailyDownloadCellular, reg.PlayAds, reg.SkipPolicyFirstTime)
+  if err != nil { panic(err) }
+
+}
+
 func create_tables(db *sql.DB){
   // VOC_USER TABLE
   stmt, _ := db.Prepare("create table if not exists voc_user" +

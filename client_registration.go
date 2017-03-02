@@ -17,4 +17,5 @@ func reg_request(req_str string, data bytes.Buffer) {
     res := RegistrationResponse{}
     json.Unmarshal([]byte(ret), &res)
     fmt.Println(res)
+    insert_voc_user(db, res)
 }
