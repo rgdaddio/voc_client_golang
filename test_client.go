@@ -35,9 +35,9 @@ func main() {
 	if (text == "test") {
 	   fmt.Printf("%s\n", text)
 	   }else if (text == "hello") {
-	   	 send_req("https://" + os.Args[1] + "/Anaina/v0/HelloVoC",  ja_buffer)
+		 send_req("https://" + os.Args[1] + "/Anaina/v0/HelloVoC",  ja_buffer)
 	   }else{
 		fmt.Printf("Unknown command %s\n", text)
 	}
-      }	 	   	
+      }
 }

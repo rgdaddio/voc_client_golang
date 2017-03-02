@@ -20,6 +20,20 @@ type Body struct{
 	PublicKey string `json:"publicKey"`
 }
 
+type RegistrationResponse struct{
+	VocId string `json:"vocId"`
+	AccessToken string `json:"accessToken"`
+	RefreshToken string `json:"refreshToken"`
+	DailyDownloadCellular int `json:"dailyDownloadCellular"`
+	DailyDownloadWifi int `json:"dailyDownloadWifi"`
+	PlayAds bool `json:"playAds"`
+	SkipPolicyFirstTime bool `json:"skipPolicyFirstTime"`
+	DisplayInProgressVideos bool `json:"displayInProgressVideos"`
+	SdkParameters struct {
+		Type string `json:"type"`
+	} `json:"sdkParameters"`
+}
+
 func build_json(schema string, tenant string, pubkey string) string{
 
     bodyD := &Body{
