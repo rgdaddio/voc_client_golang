@@ -8,8 +8,9 @@ import (
     "crypto/tls"
     "bytes"
 )
-func send_req(url string, data bytes.Buffer){
+func send_req(url string, data bytes.Buffer) string{
   fmt.Printf("%s\n", url)
+  var ret string = "error"
   tr := &http.Transport{
       TLSClientConfig: &tls.Config{InsecureSkipVerify : true},
   }
@@ -28,5 +29,7 @@ func send_req(url string, data bytes.Buffer){
       }
       fmt.Fprintf(os.Stdout, "Response\n")
       fmt.Printf("%s\n", string(contents))
+      ret = string(contents)
   }
+  return ret
 }
