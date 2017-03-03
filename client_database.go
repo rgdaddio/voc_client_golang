@@ -18,6 +18,21 @@ func insert_voc_user(db *sql.DB, reg RegistrationResponse){
 
 }
 
+func validate_user_for_reg(db *sql.DB) bool{
+  stmt, err := db.Prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='voc_user'")
+  
+  if err != nil { return false }
+  _, err = stmt.Exec()
+  if err != nil { return false }
+  
+  stmt, err = db.Prepare("SELECT device_id, platform, voc_id, access_token, refresh_token, server, server_state from voc_user")
+  if err != nil { return false }
+  _, err = stmt.Exec()
+  if err != nil { return false }
+  
+  return true
+}
+
 func create_tables(db *sql.DB){
   // VOC_USER TABLE
   stmt, _ := db.Prepare("create table if not exists voc_user" +
