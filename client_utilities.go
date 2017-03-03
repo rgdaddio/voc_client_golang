@@ -34,7 +34,7 @@ type RegistrationResponse struct{
 	} `json:"sdkParameters"`
 }
 
-func build_json(schema string, tenant string, pubkey string) string{
+func build_reg_json(schema string, tenant string, pubkey string) string{
 
     bodyD := &Body{
 		PublicKey : pubkey,

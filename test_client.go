@@ -21,13 +21,11 @@ func main() {
        os.Exit(1)
     }
 
+    reg_request(os.Args[1], os.Args[2], os.Args[3], os.Args[4])
+
+    //fmt.Printf("%s", db)
+
     var ja_buffer bytes.Buffer
-    jsnn := build_json(os.Args[2], os.Args[3], os.Args[4])
-    ja_buffer.WriteString(jsnn)
-
-      reg_request("https://" + os.Args[1] + "/Anaina/v0/Register", ja_buffer)
-      //fmt.Printf("%s", db)
-
     reader := bufio.NewReader(os.Stdin)
     for{
 	text, _ := reader.ReadString('\n')
@@ -36,6 +34,8 @@ func main() {
 	   fmt.Printf("%s\n", text)
 	   }else if (text == "hello") {
 		 send_req("https://" + os.Args[1] + "/Anaina/v0/HelloVoC",  ja_buffer)
+	   }else if (text == "status") {
+		 send_req("https://" + os.Args[1] + "/Anaina/v0/Status",  ja_buffer)
 	   }else{
 		fmt.Printf("Unknown command %s\n", text)
 	}
