@@ -34,6 +34,23 @@ type RegistrationResponse struct{
 	} `json:"sdkParameters"`
 }
 
+type VocInfo struct{
+  VocId string
+  AccessToken string
+  RefreshToken string
+}
+
+type StatusBody struct{
+	ServerState ServerState `json:"serverState"`
+    AccessToken string `json:"accessToken"`
+    RefreshToken string `json:"refreshToken"`
+	VocId string `json:"vocId"`
+    DeviceStatus struct{
+      Charger bool `json:"charger"`
+	} `json:"deviceStatus"`
+}
+
+
 func build_reg_json(schema string, tenant string, pubkey string) string{
 
     bodyD := &Body{
@@ -43,6 +60,20 @@ func build_reg_json(schema string, tenant string, pubkey string) string{
 		DeviceType: "pc",
 		PushToken: "tt",
 		Version: "18.1.2",
+		ServerState: ServerState{
+		    SchemaName:   schema,
+		    TenantId: tenant},
+		}
+    bodyB, _ := json.Marshal(bodyD)
+    fmt.Println(string(bodyB))
+    return  string(bodyB)
+}
+
+func build_status_json(schema string, tenant string, voc_info VocInfo)string{
+
+    bodyD := &StatusBody{
+		VocId: voc_info.VocId,
+        AccessToken : voc_info.AccessToken,
 		ServerState: ServerState{
 		    SchemaName:   schema,
 		    TenantId: tenant},

@@ -18,18 +18,35 @@ func insert_voc_user(db *sql.DB, reg RegistrationResponse){
 
 }
 
+func get_voc_info(db *sql.DB) VocInfo {
+  rows, _ := db.Query("SELECT voc_id, access_token, refresh_token from voc_user")
+  var voc_id string
+  var access_token string
+  var refresh_token string
+
+  rows.Next()
+  rows.Scan(&voc_id, &access_token, &refresh_token)
+
+  voc_info := VocInfo{
+		VocId : voc_id,
+		AccessToken: access_token,
+		RefreshToken: refresh_token,
+  }
+  return  voc_info
+}
+
 func validate_user_for_reg(db *sql.DB) bool{
   stmt, err := db.Prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='voc_user'")
-  
+
   if err != nil { return false }
   _, err = stmt.Exec()
   if err != nil { return false }
-  
+
   stmt, err = db.Prepare("SELECT device_id, platform, voc_id, access_token, refresh_token, server, server_state from voc_user")
   if err != nil { return false }
   _, err = stmt.Exec()
   if err != nil { return false }
-  
+
   return true
 }
 
