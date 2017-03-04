@@ -18,7 +18,6 @@ type Body struct{
 	PushToken string `json:"pushToken"`
 	Version string `json:"version"`
 	PublicKey string `json:"publicKey"`
-	VocId string `json:"vocId"`
 }
 
 type RegistrationResponse struct{
