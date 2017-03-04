@@ -18,6 +18,7 @@ type Body struct{
 	PushToken string `json:"pushToken"`
 	Version string `json:"version"`
 	PublicKey string `json:"publicKey"`
+	VocId string `json:"vocId"`
 }
 
 type RegistrationResponse struct{
@@ -50,6 +51,12 @@ type StatusBody struct{
 	} `json:"deviceStatus"`
 }
 
+type ManifestBody struct{
+    ServerState ServerState `json:"serverState"`
+    AccessToken string `json:"accessToken"`
+    RefreshToken string `json:"refreshToken"`
+    VocId string `json:"vocId"`
+}
 
 func build_reg_json(schema string, tenant string, pubkey string) string{
 
@@ -81,4 +88,17 @@ func build_status_json(schema string, tenant string, voc_info VocInfo)string{
     bodyB, _ := json.Marshal(bodyD)
     fmt.Println(string(bodyB))
     return  string(bodyB)
+}
+
+func build_manifest_json(schema string, tenant string, voc_info VocInfo) string{
+     bodyD := &ManifestBody{
+               VocId: voc_info.VocId,
+	       AccessToken : voc_info.AccessToken,
+	               ServerState: ServerState{
+                           SchemaName:   schema,
+                           TenantId: tenant},
+                       }
+    bodyB, _ := json.Marshal(bodyD)
+    fmt.Println(string(bodyB))
+    return  string(bodyB)                 
 }
