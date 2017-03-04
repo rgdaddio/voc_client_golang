@@ -6,7 +6,7 @@ import (
     "bytes"
     "bufio"
     "strings"
-//    "database/sql"
+    "database/sql"
     _"github.com/mattn/go-sqlite3"
 )
 
@@ -14,14 +14,26 @@ func build_header(){
      //return head
 }
 
+func status_req(url string, schema string, tenant string, db *sql.DB){
+    voc_info := get_voc_info(db)
+    var ja_buffer bytes.Buffer
+    jsnn := build_status_json(schema, tenant, voc_info)
+    ja_buffer.WriteString(jsnn)
+    data := ja_buffer
+    ret := send_req(url,  data)
+    fmt.Printf("%t\n", ret);
+}
+
 func main() {
+
+    db, _ := sql.Open("sqlite3", "./foo.db")
 
     if len(os.Args) != 5 {
        fmt.Fprintf(os.Stderr, "Usage: client <server> <schemaName> <tenantId> <publicKey>\n")
        os.Exit(1)
     }
 
-    reg_request(os.Args[1], os.Args[2], os.Args[3], os.Args[4])
+    reg_request(os.Args[1], os.Args[2], os.Args[3], os.Args[4], db)
 
     //fmt.Printf("%s", db)
 
@@ -35,7 +47,7 @@ func main() {
 	   }else if (text == "hello") {
 		 send_req("https://" + os.Args[1] + "/Anaina/v0/HelloVoC",  ja_buffer)
 	   }else if (text == "status") {
-		 send_req("https://" + os.Args[1] + "/Anaina/v0/Status",  ja_buffer)
+		 status_req("https://" + os.Args[1] + "/Anaina/v0/Status", os.Args[2], os.Args[3], db)
 	   }else{
 		fmt.Printf("Unknown command %s\n", text)
 	}

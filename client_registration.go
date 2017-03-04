@@ -9,8 +9,7 @@ import  (
 
 
 
-func reg_request(server string, schema string, tenant string, public_key string) {
-    db, _ := sql.Open("sqlite3", "./foo.db")
+func reg_request(server string, schema string, tenant string, public_key string, db *sql.DB) {
 
     var ret bool = validate_user_for_reg(db)
     if !ret {
