@@ -7,6 +7,7 @@ import (
     "bufio"
     "strings"
     "database/sql"
+    "encoding/json"
     _"github.com/mattn/go-sqlite3"
 )
 
@@ -32,6 +33,13 @@ func manifest_req(url string, schema string, tenant string, db *sql.DB){
      data := ja_buffer
      ret := send_req(url, data)
      fmt.Printf("%t\n", ret)
+     var datas []ContentManifest
+     json.Unmarshal([]byte(ret), &datas)
+     fmt.Printf("# of content manifests: %d\n ",len(datas))
+      for i := range datas {
+        fmt.Println(datas[i].Title)
+        fmt.Println(datas[i].Streams)
+      }
 }
 
 func main() {
@@ -59,7 +67,7 @@ func main() {
 	   }else if (text == "status") {
 		 status_req("https://" + os.Args[1] + "/Anaina/v0/Status", os.Args[2], os.Args[3], db)
            }else if (text == "cacheFill") {
-	   	 manifest_req("https://" + os.Args[1] + "/Anaina/v0/Download-Manifest", os.Args[2], os.Args[3], db)	   
+		 manifest_req("https://" + os.Args[1] + "/Anaina/v0/Download-Manifest", os.Args[2], os.Args[3], db)
 	   }else{
 		fmt.Printf("Unknown command %s\n", text)
 	}
