@@ -69,23 +69,23 @@ type ContentManifest struct{
     ObjectAttrs string  `json:"objectAttrs"`
     File string         `json:"file"`
     ContentUniqueId string `json:"contentUniqueId"`
-    TimeStamp int `json:"timestamp"`
-    ThumbAttrs string `json:"thumbAttrs"`
-    Summary string `json:"summary"`
-    UniqueId string `json:"uniqueId"`
-    ObjectSize int `json:"objectSize"`
-    ObjectType string `json:"objectType"`
-    Url string `json:"url"`
-    Title string `json:"title"`
-    Priority int `json:"priority"`
-    ExpireDate int `json:"expireDate"`
-    CatId []string `json:"catId"`
-    Tags []ContentTag `json:"tags"`
-    AdServerUrl string `json:"adServerUrl"`
+    TimeStamp int       `json:"timestamp"`
+    ThumbAttrs string   `json:"thumbAttrs"`
+    Summary string      `json:"summary"`
+    UniqueId string     `json:"uniqueId"`
+    ObjectSize int      `json:"objectSize"`
+    ObjectType string   `json:"objectType"`
+    Url string          `json:"url"`
+    Title string        `json:"title"`
+    Priority int        `json:"priority"`
+    ExpireDate int      `json:"expireDate"`
+    CatId []string      `json:"catId"`
+    Tags []ContentTag   `json:"tags"`
+    AdServerUrl string  `json:"adServerUrl"`
     Streams []map[string]string `json:"streams"`
     FileGroup []map[string]string `json:"FileGroup"`
     SdkMetadataPassthrough string `json:"sdkMetadataPassthrough"`
-    KeyServerUrl string `json:"keyServerUrl"`
+    KeyServerUrl string   `json:"keyServerUrl"`
 }
 
 
@@ -131,5 +131,5 @@ func build_manifest_json(schema string, tenant string, voc_info VocInfo) string{
                        }
     bodyB, _ := json.Marshal(bodyD)
     fmt.Println(string(bodyB))
-    return  string(bodyB)                 
+    return  string(bodyB)
 }

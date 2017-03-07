@@ -5,9 +5,34 @@ import (
     "os"
     "database/sql"
     _"github.com/mattn/go-sqlite3"
+    "encoding/json"
 )
 
+func insert_content_manifest(db *sql.DB, content ContentManifest){
+    fmt.Println(content)
+
+    streamJsonString, err := json.Marshal(content)
+
+    stmt, err := db.Prepare("INSERT INTO cache_manifest( " +
+                          " local_thumbnail, thumbnail_size, thumb_attrs, video_size, " +
+                          " content_provider, unique_id, summary, " +
+                          " title,  timestamp, sdk_metadata, streams, " +
+                          "  ad_server_url, priority,  object_type, " +
+                          "  object_attrs, key_server_url " +
+                          " ) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+  if err != nil { fmt.Println("HI"); panic(err) }
+  _, err = stmt.Exec(content.ThumbFile, content.ThumbSize, content.ThumbAttrs, content.ObjectSize,
+                      content.Provider, content.ContentUniqueId, content.Summary,
+                      content.Title, content.TimeStamp, content.SdkMetadataPassthrough, streamJsonString,
+                      content.AdServerUrl, content.Priority, content.ObjectType,
+                      content.ObjectAttrs, content.KeyServerUrl)
+  if err != nil { fmt.Println("HI"); panic(err) }
+
+
+}
+
 func insert_voc_user(db *sql.DB, reg RegistrationResponse){
+
   stmt, err := db.Prepare("INSERT INTO voc_user( " +
                           "voc_id, access_token, refresh_token, " +
                           " daily_download_wifi, daily_download_cellular, play_ads, skip_policy_first_time)" +
@@ -32,6 +57,7 @@ func get_voc_info(db *sql.DB) VocInfo {
 		AccessToken: access_token,
 		RefreshToken: refresh_token,
   }
+  rows.Close()
   return  voc_info
 }
 
@@ -113,7 +139,7 @@ func create_tables(db *sql.DB){
   //cache_manifest
   stmt, _ = db.Prepare(" create table if not exists cache_manifest " +
     "( local_file text, local_thumbnail text, " +
-       " local_nfo text, video_size integer, " +
+       " local_info text, video_size integer, " +
        " thumbnail_size integer, download_date integer, " +
        " content_provider text, category text, " +
        " unique_id text, summary text, " +

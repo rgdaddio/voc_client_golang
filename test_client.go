@@ -39,6 +39,7 @@ func manifest_req(url string, schema string, tenant string, db *sql.DB){
       for i := range datas {
         fmt.Println(datas[i].Title)
         fmt.Println(datas[i].Streams)
+        insert_content_manifest(db, datas[i])
       }
 }
 
