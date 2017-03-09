@@ -44,6 +44,8 @@ func main() {
 
     //fmt.Printf("%s", db)
 
+    //download("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "BIG_BUCK_BUNNEH")
+
     var ja_buffer bytes.Buffer
     reader := bufio.NewReader(os.Stdin)
     for{
